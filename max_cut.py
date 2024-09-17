@@ -142,11 +142,11 @@ def main():
     end = int(sys.argv[4])
 
     if cell == "GM":
-        f = analysis.HssFile("../GM_igm-model.hss", "r")
+        f = analysis.HssFile("./Model/GM_igm-model.hss", "r")
     elif cell == "H1":
-        f = analysis.HssFile("../H1_igm-model.hss", "r")
+        f = analysis.HssFile("./Model/H1_igm-model.hss", "r")
     elif cell == "HFF":
-        f = analysis.HssFile("../HFF_igm-model.hss", "r")
+        f = analysis.HssFile("./Model/HFF_igm-model.hss", "r")
     else:
         print("Unknown Cell Type.")
     coordinates = f.get_coordinates()
@@ -155,7 +155,7 @@ def main():
     n_radius = 5000.0
     coordinates = np.concatenate((coordinates[:np.sum(length[:22])], coordinates[np.sum(length[:24]):]), axis=0)
 
-    cp = np.load("../" + cell + "_Compartments.npy")
+    cp = np.load("./Model/" + cell + "_compartments.npy")
     cp = cp[np.sum(length[:chrom - 1]):np.sum(length[:chrom])]
     cp1 = np.where(cp > 0)[0]
     cp2 = np.where(cp < 0)[0]
@@ -165,7 +165,7 @@ def main():
     print(cp2)
     plot_compartment("GT", cp1, cp2)
 
-    spd = np.load("../"  + cell + "_speckle_distance.npy")
+    spd = np.load("./Model/" + cell + "_speckle_distance.npy")
     spd = np.concatenate((spd[:, :np.sum(length[:22])], spd[:, np.sum(length[:24]):]), axis=1)
     
     for index in range(start, end):
