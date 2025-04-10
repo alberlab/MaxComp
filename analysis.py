@@ -103,24 +103,14 @@ def main():
 
     a_spd = []
     b_spd = []
-    a_spd_gt = []
-    b_spd_gt = []
     a_lmd = []
     b_lmd = []
-    a_lmd_gt = []
-    b_lmd_gt = []
     a_rp = []
     b_rp = []
-    a_rp_gt = []
-    b_rp_gt = []
     a_rg = []
     b_rg = []
-    a_rg_gt = []
-    b_rg_gt = []
     a_icp = []
     b_icp = []
-    a_icp_gt = []
-    b_icp_gt = []
     profile = []
     str_profile = []
     for i in range(start, end):
@@ -142,35 +132,19 @@ def main():
             sub_b_spd = np.mean(full_spd[s2])
             a_spd.append(sub_a_spd)
             b_spd.append(sub_b_spd)
-            sub_a_spd_gt = np.mean(full_spd[c1])
-            sub_b_spd_gt = np.mean(full_spd[c2])
-            a_spd_gt.append(sub_a_spd_gt)
-            b_spd_gt.append(sub_b_spd_gt)
             sub_a_lmd = np.mean(lamina_distance(full_coord[s1], n_radius))
             sub_b_lmd = np.mean(lamina_distance(full_coord[s2], n_radius))
             a_lmd.append(sub_a_lmd)
             b_lmd.append(sub_b_lmd)
-            sub_a_lmd_gt = np.mean(lamina_distance(full_coord[c1], n_radius))
-            sub_b_lmd_gt = np.mean(lamina_distance(full_coord[c2], n_radius))
-            a_lmd_gt.append(sub_a_lmd_gt)
-            b_lmd_gt.append(sub_b_lmd_gt)
             sub_a_rp = np.mean(radial_profile(full_coord[s1], n_radius))
             sub_b_rp = np.mean(radial_profile(full_coord[s2], n_radius))
             a_rp.append(sub_a_rp)
             b_rp.append(sub_b_rp)
-            sub_a_rp_gt = np.mean(radial_profile(full_coord[c1], n_radius))
-            sub_b_rp_gt = np.mean(radial_profile(full_coord[c2], n_radius))
-            a_rp_gt.append(sub_a_rp_gt)
-            b_rp_gt.append(sub_b_rp_gt)
             rg = radius_gyration(full_coord, radius)
             sub_a_rg = np.mean(rg[s1][rg[s1] != 0.0])
             sub_b_rg = np.mean(rg[s2][rg[s2] != 0.0])
             a_rg.append(sub_a_rg)
             b_rg.append(sub_b_rg)
-            sub_a_rg_gt = np.mean(rg[c1][rg[c1] != 0.0])
-            sub_b_rg_gt = np.mean(rg[c2][rg[c2] != 0.0])
-            a_rg_gt.append(sub_a_rg_gt)
-            b_rg_gt.append(sub_b_rg_gt)
             sub_profile = np.zeros(len(cp))
             sub_profile[s1] = 1.0
             profile.append(sub_profile)
@@ -181,10 +155,6 @@ def main():
             sub_b_spd = np.mean(full_icp[s2])
             a_icp.append(sub_a_spd)
             b_icp.append(sub_b_spd)
-            sub_a_spd_gt = np.mean(full_icp[c1])
-            sub_b_spd_gt = np.mean(full_icp[c2])
-            a_icp_gt.append(sub_a_spd_gt)
-            b_icp_gt.append(sub_b_spd_gt)
         except:
             print("File 'compartments_" + str(i) + ".npy' not found.")
             pass 
@@ -220,25 +190,11 @@ def main():
     p_value = ttest_ind(a_spd, b_spd, equal_var=False)
     print(p_value)
 
-    ratios = [a_spd_gt, b_spd_gt]
-    fig = plt.figure(figsize=(4, 8))
-    sns.boxplot(data=ratios, showfliers=False)
-    plt.savefig("SpD_Box_Plot_GT.pdf", dpi=600)
-    p_value = ttest_ind(a_spd_gt, b_spd_gt, equal_var=False)
-    print(p_value)
-
     ratios = [a_lmd, b_lmd]
     fig = plt.figure(figsize=(4, 8))
     sns.boxplot(data=ratios, showfliers=False)
     plt.savefig("LmD_Box_Plot.pdf", dpi=600)
     p_value = ttest_ind(a_lmd, b_lmd, equal_var=False)
-    print(p_value)
-
-    ratios = [a_lmd_gt, b_lmd_gt]
-    fig = plt.figure(figsize=(4, 8))
-    sns.boxplot(data=ratios, showfliers=False)
-    plt.savefig("LmD_Box_Plot_GT.pdf", dpi=600)
-    p_value = ttest_ind(a_lmd_gt, b_lmd_gt, equal_var=False)
     print(p_value)
 
     ratios = [a_rp, b_rp]
@@ -248,13 +204,6 @@ def main():
     p_value = ttest_ind(a_rp, b_rp, equal_var=False)
     print(p_value)
 
-    ratios = [a_rp_gt, b_rp_gt]
-    fig = plt.figure(figsize=(4, 8))
-    sns.boxplot(data=ratios, showfliers=False)
-    plt.savefig("RAD_Box_Plot_GT.pdf", dpi=600)
-    p_value = ttest_ind(a_rp_gt, b_rp_gt, equal_var=False)
-    print(p_value)
-
     ratios = [a_rg, b_rg]
     fig = plt.figure(figsize=(4, 8))
     sns.boxplot(data=ratios, showfliers=False)
@@ -262,25 +211,11 @@ def main():
     p_value = ttest_ind(a_rg, b_rg, equal_var=False)
     print(p_value)
 
-    ratios = [a_rg_gt, b_rg_gt]
-    fig = plt.figure(figsize=(4, 8))
-    sns.boxplot(data=ratios, showfliers=False)
-    plt.savefig("RG_Box_Plot_GT.pdf", dpi=600)
-    p_value = ttest_ind(a_rg_gt, b_rg_gt, equal_var=False)
-    print(p_value)
-
     ratios = [a_icp, b_icp]
     fig = plt.figure(figsize=(4, 8))
     sns.boxplot(data=ratios, showfliers=False)
     plt.savefig("ICP_Box_Plot.pdf", dpi=600)
     p_value = ttest_ind(a_icp, b_icp, equal_var=False)
-    print(p_value)
-
-    ratios = [a_icp_gt, b_icp_gt]
-    fig = plt.figure(figsize=(4, 8))
-    sns.boxplot(data=ratios, showfliers=False)
-    plt.savefig("ICP_Box_Plot_GT.pdf", dpi=600)
-    p_value = ttest_ind(a_icp_gt, b_icp_gt, equal_var=False)
     print(p_value)
 
     cmap = LinearSegmentedColormap.from_list("rg", ["violet", "sienna"], N=256)
