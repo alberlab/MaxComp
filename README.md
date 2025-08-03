@@ -1,5 +1,5 @@
 # MaxComp
-Scripts used to perform max-cut algorithm and compartment analysis. Please cite: https://doi.org/10.1101/2024.07.02.600897.
+Scripts used to perform max-cut algorithm and compartment analysis. Please cite: https://doi.org/10.1371/journal.pcbi.1013114.
 ## Package requirements
 - alabtools (https://github.com/alberlab/alabtools)
 - pickle
